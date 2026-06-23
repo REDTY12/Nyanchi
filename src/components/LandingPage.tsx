@@ -29,7 +29,6 @@ export default function LandingPage({
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
       console.error("Copy failed:", err);
-      // fallback
       const textarea = document.createElement("textarea");
       textarea.value = INVITE_URL;
       document.body.appendChild(textarea);
