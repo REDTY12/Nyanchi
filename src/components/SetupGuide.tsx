@@ -40,7 +40,6 @@ export default function SetupGuide({ guildConfig, t, lang = "ru" }: SetupGuidePr
 
   return (
     <div className="space-y-6" id="setup-guide">
-      {/* Header */}
       <div className="border-b border-amber-900/10 pb-5">
         <h2 className="text-2xl font-serif text-stone-900 flex items-center gap-2">
           <span>📚</span> {t.setupTitle}
@@ -51,9 +50,7 @@ export default function SetupGuide({ guildConfig, t, lang = "ru" }: SetupGuidePr
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Step Guide Grid */}
         <div className="lg:col-span-2 space-y-5">
-          {/* Steps */}
           {[
             {
               id: "invite",
@@ -103,7 +100,6 @@ export default function SetupGuide({ guildConfig, t, lang = "ru" }: SetupGuidePr
                     Server Role Order Example
                   </h5>
                   <div className="space-y-1.5 font-sans">
-                    {/* Role list representation */}
                     <div className="flex items-center gap-2 text-xs bg-white py-1.5 px-3 rounded-lg border border-stone-200 shadow-sm font-bold text-[#E0533C]">
                       <span>👑</span> <span>Nyanchi Bot (Active Moderator)</span>
                     </div>
@@ -148,7 +144,6 @@ export default function SetupGuide({ guildConfig, t, lang = "ru" }: SetupGuidePr
               }`}
               id={`setup-step-${item.id}`}
             >
-              {/* Step checkbox / status */}
               <button
                 onClick={() => toggleCheck(item.id as keyof typeof checks)}
                 className={`w-6 h-6 rounded-full border-2 flex items-center justify-center shrink-0 cursor-pointer mt-1 transition-all ${
@@ -182,8 +177,6 @@ export default function SetupGuide({ guildConfig, t, lang = "ru" }: SetupGuidePr
               </div>
             </div>
           ))}
-
-          {/* Discord Developer Portal Tutorial Section */}
           <div className="bg-[#5865F2]/5 border border-[#5865F2]/25 p-6 rounded-2xl space-y-4">
             <div className="flex items-center gap-2.5">
               <span className="text-xl">⚙️</span>
@@ -267,10 +260,8 @@ export default function SetupGuide({ guildConfig, t, lang = "ru" }: SetupGuidePr
           </div>
         </div>
 
-        {/* Info Column Sidebar Card */}
         <div className="lg:col-span-1 space-y-6">
           <div className="bg-stone-900 text-stone-100 rounded-2xl p-6 shadow-xl relative overflow-hidden flex flex-col justify-between min-h-[300px]">
-            {/* Background design glow */}
             <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl pointer-events-none" />
 
             <div className="space-y-4 relative">
@@ -306,7 +297,6 @@ export default function SetupGuide({ guildConfig, t, lang = "ru" }: SetupGuidePr
             </div>
           </div>
 
-          {/* Quick FAQ info Card */}
           <div className="bg-white/70 border border-stone-200 rounded-2xl p-5 space-y-3 shadow-sm">
             <h4 className="text-xs font-bold text-stone-800 uppercase tracking-widest">
               Setup F.A.Q.
