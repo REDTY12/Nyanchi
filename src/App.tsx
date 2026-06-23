@@ -147,20 +147,29 @@ export default function App() {
   useEffect(() => {
     fetchSession();
 
-    const handleOAuthMessage = (event: MessageEvent) => {
-      const origin = event.origin;
-      if (!origin.endsWith('.run.app') && !origin.includes('localhost') && !origin.includes(window.location.host)) {
-        return;
+  const handleOAuthMessage = (event: MessageEvent) => {
+  const origin = event.origin;
+  const allowedOrigins = [
+    'http://localhost:3000',
+    'http://localhost:5173',
+    window.location.origin, 
+  ];
+  
+  if (!allowedOrigins.includes(origin) && !origin.endsWith('.railway.app') && !origin.endsWith('.scxry.xyz')) {
+    console.warn('[OAuth] Blocked message from:', origin);
+    return;
+  }
+  
+  if (event.data?.type === 'OAUTH_AUTH_SUCCESS') {
+    console.log('[OAuth] Success message received!');
+    fetchSession().then(() => {
+      if (pendingAction) {
+        pendingAction();
+        setPendingAction(null);
       }
-      if (event.data?.type === 'OAUTH_AUTH_SUCCESS') {
-        fetchSession().then(() => {
-          if (pendingAction) {
-            pendingAction();
-            setPendingAction(null);
-          }
-        });
-      }
-    };
+    });
+  }
+};
 
     window.addEventListener('message', handleOAuthMessage);
     return () => window.removeEventListener('message', handleOAuthMessage);
