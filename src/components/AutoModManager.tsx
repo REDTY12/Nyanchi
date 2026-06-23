@@ -67,7 +67,6 @@ export default function AutoModManager({
 
   return (
     <div className="space-y-6" id="automod-manager">
-      {/* Header Panel */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-amber-900/10 pb-5">
         <div>
           <h2 className="text-2xl font-serif text-stone-900 dark:text-stone-150 flex items-center gap-2">
@@ -77,8 +76,6 @@ export default function AutoModManager({
             {t.autoModDesc}
           </p>
         </div>
-
-        {/* Global AutoMod Enable Toggle */}
         <button
           onClick={() => handleToggleAutoMod(!config.enabled)}
           className={`relative inline-flex h-7 w-12 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
@@ -96,7 +93,6 @@ export default function AutoModManager({
 
       {config.enabled ? (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Rules Navigation list - Left Card Column */}
           <div className="lg:col-span-1 space-y-3">
             <h3 className="text-xs font-semibold text-stone-700 dark:text-stone-300 uppercase tracking-widest mb-2 px-1">
               Safety Checkpoints
@@ -104,7 +100,6 @@ export default function AutoModManager({
 
             {config.rules.map((rule) => {
               const isActive = activeTab === rule.id;
-              // determine icon representing the trigger type
               const getIcon = () => {
                 if (rule.triggerType === "spam") return <ShieldAlert className="w-4 h-4" />;
                 if (rule.triggerType === "links") return <Ban className="w-4 h-4" />;
@@ -147,7 +142,6 @@ export default function AutoModManager({
                     </div>
                   </div>
 
-                  {/* Enabled Pill Indicator */}
                   <div
                     className={`w-2.5 h-2.5 rounded-full ${
                       rule.enabled ? "bg-[#2D7345]" : "bg-stone-300"
@@ -157,15 +151,11 @@ export default function AutoModManager({
               );
             })}
           </div>
-
-          {/* Active Rule Details View Panel - Right 2 Columns */}
           <div className="lg:col-span-2 space-y-6">
             {config.rules
               .filter((rule) => rule.id === activeTab)
               .map((rule) => {
                 const titleText = lang === "ru" ? rule.nameRu : rule.name;
-                
-                // Get rule localized descriptions
                 const getRuleDesc = () => {
                   if (rule.triggerType === "spam") return t.filterSpamDesc;
                   if (rule.triggerType === "links") return t.filterLinksDesc;
@@ -179,7 +169,6 @@ export default function AutoModManager({
                     className="bg-white/70 dark:bg-stone-900/40 backdrop-blur-sm border border-stone-200/80 dark:border-stone-850 rounded-2xl p-6 shadow-sm space-y-6"
                     id={`automod-editor-${rule.id}`}
                   >
-                    {/* Header */}
                     <div className="flex items-start justify-between border-b border-stone-200 dark:border-stone-800 pb-4">
                       <div>
                         <span className="text-[10px] uppercase font-bold text-[#E0533C] tracking-widest">
@@ -192,8 +181,6 @@ export default function AutoModManager({
                           {getRuleDesc()}
                         </p>
                       </div>
-
-                      {/* Rule Specific Toggle */}
                       <div className="flex items-center gap-2">
                         <span className="text-xs font-semibold text-stone-600 hidden sm:inline">
                           {t.ruleEnabled}
@@ -215,7 +202,6 @@ export default function AutoModManager({
 
                     {rule.enabled ? (
                       <div className="space-y-6">
-                        {/* 1. Rule Parameters depending on trigger type */}
                         {rule.triggerType === "bad_words" && (
                           <div className="space-y-2">
                             <label className="block text-xs font-semibold text-stone-700 dark:text-stone-300 uppercase tracking-widest">
@@ -287,8 +273,6 @@ export default function AutoModManager({
                             </div>
                           </div>
                         )}
-
-                        {/* 2. Rule Action penalties */}
                         <div className="pt-4 border-t border-stone-200/50 dark:border-stone-800 space-y-3">
                           <label className="block text-xs font-semibold text-stone-700 dark:text-stone-300 uppercase tracking-widest">
                             {t.ruleAction}
@@ -332,8 +316,6 @@ export default function AutoModManager({
                             })}
                           </div>
                         </div>
-
-                        {/* Save Button */}
                         <div className="pt-4 border-t border-stone-200/50 dark:border-stone-800">
                           <button
                             onClick={onSave}
@@ -365,7 +347,6 @@ export default function AutoModManager({
           </div>
         </div>
       ) : (
-        /* Disabled empty panel */
         <div className="bg-stone-50 dark:bg-stone-900/10 border border-dashed border-stone-200 dark:border-stone-800 hover:border-stone-300 dark:hover:border-stone-700 transition-colors p-12 text-center rounded-2xl flex flex-col items-center justify-center">
           <span className="text-4xl text-stone-400 mb-3 filter grayscale">🛡️💤</span>
           <h3 className="text-base font-semibold text-stone-800 dark:text-stone-200">AutoMod deactive</h3>
