@@ -1,0 +1,6 @@
+{
+  "name": "Nyanchi",
+  "description": "Increase patient adherence and improve outcomes with behavior-based Nudges. Grounded in behavioral science, designed for real-world care.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

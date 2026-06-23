@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  
+  --color-bg-app: var(--bg-app);
+  --color-bg-card: var(--bg-card);
+  --color-border-card: var(--border-card);
+  --color-text-main: var(--text-main);
+  --color-text-muted: var(--text-muted);
+  --color-bg-control: var(--bg-control);
+  --color-border-control: var(--border-control);
+  --color-text-control: var(--text-control);
+  --color-bg-tab-bar: var(--bg-tab-bar);
+  --color-bg-tab-active: var(--bg-tab-active);
+  --color-text-tab-active: var(--text-tab-active);
+  --color-text-tab-inactive: var(--text-tab-inactive);
+  --color-bg-header: var(--bg-header);
+  --color-border-header: var(--border-header);
+}
+
+:root {
+  --bg-app: #f8fafc; /* bg-slate-50 */
+  --bg-card: #ffffff; /* bg-white */
+  --border-card: #e2e8f0; /* border-slate-200 */
+  --text-main: #0f172a; /* text-slate-905 */
+  --text-muted: #64748b; /* text-slate-500 */
+  --bg-control: #f8fafc; /* bg-slate-55 */
+  --border-control: #e2e8f0; /* border-slate-200 */
+  --text-control: #0f172a;
+  --bg-tab-bar: rgba(226, 232, 240, 0.5); /* bg-slate-200/50 */
+  --bg-tab-active: #ffffff;
+  --text-tab-active: #5865F2;
+  --text-tab-inactive: #64748b;
+  --bg-header: rgba(255, 255, 255, 0.95);
+  --border-header: #e2e8f0;
+}
+
+.theme-black {
+  --bg-app: #09090b; /* bg-zinc-950 */
+  --bg-card: #18181b; /* bg-zinc-900 */
+  --border-card: #27272a; /* border-zinc-800 */
+  --text-main: #f4f4f5; /* text-zinc-100 */
+  --text-muted: #a1a1aa; /* text-zinc-400 */
+  --bg-control: #27272a; /* bg-zinc-800 */
+  --border-control: #3f3f46; /* border-zinc-700 */
+  --text-control: #fafafa;
+  --bg-tab-bar: #121214; /* bg-zinc-950/deep dark */
+  --bg-tab-active: #27272a; /* bg-zinc-800 */
+  --text-tab-active: #60a5fa; /* text-blue-400 */
+  --text-tab-inactive: #fafafa;
+  --bg-header: rgba(24, 24, 27, 0.95); /* bg-zinc-900/95 */
+  --border-header: #27272a;
+}
+
+/* Custom layout utility for smooth non-intrusive scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(120, 115, 105, 0.3);
+  border-radius: 99px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(120, 115, 105, 0.5);
+}
+
+/* Ensure smooth scroll is consistent and content has custom behavior */
+@layer utilities {
+  .scroll-smooth-custom {
+    scroll-behavior: smooth;
+  }
+}
