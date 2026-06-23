@@ -10,7 +10,7 @@ interface DiscordMockProps {
   onSimulateJoin: () => void;
   onSimulateLeave: () => void;
   onToggleUserRole: (roleId: string) => void;
-  activeRoles: string[]; // Role IDs active on the current simulating user
+  activeRoles: string[]; 
   t: TranslationKeys;
   botTyping: boolean;
   systemActivityLog: string[];
@@ -32,7 +32,6 @@ export default function DiscordMock({
   const [activeChannelId, setActiveChannelId] = useState("ch_general");
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
-  // Scroll to bottom on updates (Directly setting scrollTop prevents iframe page-bouncing)
   useEffect(() => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
@@ -46,11 +45,7 @@ export default function DiscordMock({
     setInputText("");
   };
 
-  // Filter messages based on active channel
   const filteredMessages = messages.filter((msg) => {
-    // If welcomeConfig lists a target welcome channel, welcome events go there.
-    // General chat messages go to ch_general.
-    // System warnings or logs can stream anywhere or based on context.
     const isWelcomeEvent = msg.systemType === "welcome" || msg.systemType === "leave";
     
     if (activeChannelId === guildConfig.welcomeConfig.channelId) {
@@ -58,13 +53,11 @@ export default function DiscordMock({
     } else if (activeChannelId === "ch_general") {
       return !isWelcomeEvent;
     }
-    // general fallback
     return true;
   });
 
   return (
     <div className="bg-stone-900 rounded-3xl border border-stone-800 shadow-2xl overflow-hidden flex flex-col h-[650px] font-sans" id="discord-playground">
-      {/* 1. Client Top Banner Header */}
       <div className="px-5 py-4 bg-stone-950 border-b border-stone-900 flex items-center justify-between shadow-sm shrink-0">
         <div className="flex items-center gap-3">
           <span className="flex items-center justify-center w-8 h-8 rounded-full bg-stone-800 border border-stone-700/60 text-base">
@@ -84,16 +77,13 @@ export default function DiscordMock({
         </div>
 
         <div className="flex items-center gap-2">
-          {/* Channel Title Tab Indicator */}
           <span className="text-[10px] bg-stone-800 px-2.5 py-1 rounded-md text-stone-300 font-mono font-bold tracking-wider uppercase select-none">
             #{guildConfig.channels.find((c) => c.id === activeChannelId)?.name || "channel"}
           </span>
         </div>
       </div>
 
-      {/* 2. Primary Layout Grid */}
       <div className="flex flex-1 min-h-0 overflow-hidden">
-        {/* Left column: Channel Tree Directory */}
         <div className="w-40 bg-[#181614] border-r border-stone-900 flex flex-col justify-between p-3 shrink-0 hidden sm:flex overflow-y-auto custom-scrollbar">
           <div className="space-y-4">
             <div>
@@ -142,14 +132,11 @@ export default function DiscordMock({
               </div>
             </div>
           </div>
-
-          {/* Quick Active user identity card log */}
           <div className="bg-stone-900/60 p-2.5 border border-stone-800 rounded-xl space-y-1">
             <span className="text-[9px] text-[#E0533C] uppercase tracking-widest font-bold">Simulator User</span>
             <div className="flex items-center gap-2">
               <span className="text-[#a5b4fc] text-xs font-bold truncate">Muffin_Cat</span>
             </div>
-            {/* Roles chips in bottom */}
             <div className="flex flex-wrap gap-1 mt-1.5">
               {activeRoles.length === 0 ? (
                 <span className="text-[8px] text-stone-500 font-mono">No roles</span>
@@ -171,13 +158,8 @@ export default function DiscordMock({
             </div>
           </div>
         </div>
-
-        {/* Middle column: Active Chat messages Stream */}
         <div className="flex-1 flex flex-col bg-stone-900 min-w-0">
-          {/* Chat scrolling container */}
           <div ref={chatContainerRef} className="flex-1 overflow-y-auto custom-scrollbar p-4 space-y-4">
-            
-            {/* Direct Channel Greeting Banner */}
             <div className="p-4 bg-stone-950/40 rounded-xl border border-stone-800/40 space-y-1.5 mb-2">
               <div className="w-8 h-8 rounded-xl bg-stone-800/80 flex items-center justify-center text-stone-300 font-bold">
                 #
@@ -189,8 +171,6 @@ export default function DiscordMock({
                 This is the absolute beginning of your configured channel's history log. Sim rules and triggers stream here!
               </p>
             </div>
-
-            {/* Render messages */}
             {filteredMessages.length === 0 ? (
               <div className="h-40 flex flex-col items-center justify-center text-center opacity-60">
                 <span className="text-2xl mb-1">🐾💤</span>
@@ -201,8 +181,7 @@ export default function DiscordMock({
             ) : (
               filteredMessages.map((msg) => {
                 const isBot = msg.isBot;
-                
-                // If it's a join/leave event or standard welcome/embed alert
+              
                 if (msg.systemEvent) {
                   return (
                     <div
@@ -223,8 +202,6 @@ export default function DiscordMock({
                               : "AutoMod Penalty Flagged"}
                           </span>
                         </div>
-
-                        {/* Embed Box */}
                         {msg.embed ? (
                           <div
                             className="border-l-4 rounded-r-lg bg-stone-950/80 p-3 mt-1.5 space-y-2 max-w-sm"
@@ -259,7 +236,6 @@ export default function DiscordMock({
                   );
                 }
 
-                {/* Normal messages */}
                 return (
                   <div key={msg.id} className="flex items-start gap-3 group">
                     <span className="w-8 h-8 rounded-full bg-stone-800 border border-stone-700/60 overflow-hidden flex items-center justify-center text-base">
@@ -292,7 +268,6 @@ export default function DiscordMock({
               })
             )}
 
-            {/* Live Typing feedback simulation indicator */}
             {botTyping && (
               <div className="flex items-start gap-3 animate-pulse">
                 <span className="w-8 h-8 rounded-full bg-stone-800 border border-stone-700/60 flex items-center justify-center text-sm">
@@ -312,10 +287,7 @@ export default function DiscordMock({
               </div>
             )}
           </div>
-
-          {/* Bottom Send Action bar */}
           <div className="p-3 bg-stone-950/70 border-t border-stone-900 shrink-0">
-            {/* If general channel, user can send messages */}
             {activeChannelId === "ch_general" ? (
               <form onSubmit={handleSend} className="relative flex items-center">
                 <input
@@ -335,7 +307,6 @@ export default function DiscordMock({
                 </button>
               </form>
             ) : (
-              /* If alert log channel, show locked mode feedback */
               <div className="p-3 bg-amber-950/20 text-center rounded-xl border border-amber-900/10 flex items-center justify-center gap-2 text-[10px] text-amber-100 font-mono">
                 <Info className="w-4 h-4 text-amber-500 shrinks-0" />
                 <span>CHANNEL READ-ONLY • Log of welcome / leave telemetry metrics stream here</span>
@@ -347,9 +318,7 @@ export default function DiscordMock({
           </div>
         </div>
 
-        {/* Right column: Server Members & Config Desk */}
         <div className="w-48 bg-[#1D1B18] border-l border-stone-900 flex flex-col justify-between shrink-0 hidden lg:flex select-none">
-          {/* Top segment: Sim trigger controller */}
           <div className="p-4 space-y-4 border-b border-stone-900">
             <span className="text-[9px] uppercase font-bold text-stone-500 tracking-wider">
               Trigger Simulations
@@ -376,7 +345,6 @@ export default function DiscordMock({
             </div>
           </div>
 
-          {/* Middle segment: Self Assign Reaction station */}
           <div className="p-4 flex-1 overflow-y-auto custom-scrollbar space-y-4">
             <div>
               <span className="text-[9px] uppercase font-bold text-stone-500 tracking-wider">
@@ -386,7 +354,6 @@ export default function DiscordMock({
                 Click roles to assign them to your active sandbox user on this panel:
               </p>
 
-              {/* Roles checklist */}
               <div className="space-y-2">
                 {guildConfig.roles
                   .filter((role) => role.isSelfAssignable)
@@ -409,8 +376,6 @@ export default function DiscordMock({
                             {role.name.split(" ")[0]}
                           </span>
                         </div>
-
-                        {/* Status Check circular */}
                         <div
                           className={`w-4.5 h-4.5 rounded-full border flex items-center justify-center shrink-0 ${
                             isChecked
@@ -425,8 +390,6 @@ export default function DiscordMock({
                   })}
               </div>
             </div>
-
-            {/* Bottom active telemetry warnings logs log */}
             {systemActivityLog.length > 0 && (
               <div className="pt-4 border-t border-stone-900 space-y-2">
                 <span className="text-[9px] uppercase font-bold text-red-500 tracking-wider">
