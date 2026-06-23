@@ -12,7 +12,8 @@ export default defineConfig({
     allowedHosts: [
       "localhost",
       ".railway.app",
-      "nyanchi-production.up.railway.app",
+      ".scxry.xyz",       
+      "nyanchi.scxry.xyz",
     ],
   },
 });
